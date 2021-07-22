@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 const Form = (props) => {
+    const {boxesList, setBoxesList} = props;
     const [newColor, setNewColor] = useState("");
     const [size, setSize] = useState(200);
-    const [boxesList, setBoxesList] = useState([]);
 
     const createBoxes = (e) => {
         e.preventDefault();
@@ -35,19 +35,6 @@ const Form = (props) => {
                 </div>
                 <button style = {{margin: "8px", borderRadius: "10px", width: "100px", height: "50px", fontSize: "20px"}}>Add</button>
             </form>
-            {
-                boxesList.map((box, index) => (
-                    <div key={ index }
-                    style={{
-                    backgroundColor: box.color,
-                    width: box.size,
-                    height: box.size,
-                    margin: "20px",
-                    display: "inline-block"
-                    }}>
-                    </div>
-                ))
-            }
         </div>
     )
 }
