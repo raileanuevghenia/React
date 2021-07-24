@@ -7,12 +7,28 @@ function App() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if(inputValue === "") return;
+
     setInputValue("");
-    setInputValueList([...inputValueList, inputValue]);
+    setInputValueList([...inputValueList, {
+      text: inputValue,
+      complete: false
+    }]);
   }
 
   const deleteHandler = (index) => {
     setInputValueList(inputValueList.filter((_item,i) => i!== index));
+  }
+
+  const handleToggleChecked = (idx) => {
+    const updatedValue = inputValueList.map((item,i) => {
+      if (idx === i){
+        item.complete = !item.complete;
+      }
+      return item;
+    });
+    setInputValueList(updatedValue);
   }
   return (
     <div className="App">
@@ -28,7 +44,13 @@ function App() {
       {
           inputValueList.map((item, i) => (
               <div key={i} >
-                <span style={{marginTop: "30px",fontSize: "30px",fontWeight: "bold"}}>{ item }</span>
+                <span style={{fontSize: "30px",fontWeight: "bold", textDecoration: item.complete && "line-through"}}>{ item.text }</span>
+                <input style={{ marginLeft: "15px", width: "30px",height: "20px"}} 
+                type="checkbox" 
+                checked={item.complete}
+                onChange = { (e) => {
+                  handleToggleChecked(i);
+                }}/>
                 <button onClick = { () => deleteHandler(i)} style={{backgroundColor: "black",color: "white", marginLeft: "15px"}}>Delete</button>
               </div>
           ))
